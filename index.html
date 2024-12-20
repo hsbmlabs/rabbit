@@ -3,18 +3,19 @@
   const pageA = "https://www.google.com";
   const pageB = "https://www.yahoo.com";
 
-  // 이전 리디렉션 기록 확인
-  let target = localStorage.getItem('lastRedirect');
+  // LocalStorage를 이용해 방문 상태 확인
+  const key = 'redirectTabState';
+  let target = localStorage.getItem(key);
 
   if (!target) {
-    // 랜덤 값 생성
+    // 랜덤 리디렉션
     target = Math.random() < 0.5 ? pageA : pageB;
 
-    // 리디렉션 기록 저장
-    localStorage.setItem('lastRedirect', target);
-  } else {
-    // 기록된 리디렉션 URL을 사용
-    localStorage.removeItem('lastRedirect'); // 재설정을 위해 삭제
+    // LocalStorage에 리디렉션 상태 저장
+    localStorage.setItem(key, target);
+
+    // 일정 시간 후 삭제 (옵션)
+    setTimeout(() => localStorage.removeItem(key), 5000); // 5초 후 초기화
   }
 
   // 리디렉션 실행
